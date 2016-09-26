@@ -45,11 +45,14 @@ router.get('/:articleTitle', (req,res,next)=>{
 		where: {
 			urlTitle: articleTitle
 		}
-	}).then((result)=>{
-		// found result
-		// res.send(result);
-		res.render('wikipage', {result});
-	}).catch(next); // catch if no result
+	}).then((page)=>{
+		return page.getAuthor()
+			.then(author=>{
+				page.author = author;
+				res.render('wikipage', {page})
+			})
+
+			}).catch(next); // catch if no result
 
 })
 

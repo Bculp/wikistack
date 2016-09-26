@@ -66,5 +66,5 @@ Page.belongsTo(User, {as: "author"});
 module.exports = {
   Page: Page,
   User: User,
-  sync: db.sync({force: true})
+  sync: db.sync({force: false})
 };

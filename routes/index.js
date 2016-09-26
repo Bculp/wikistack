@@ -12,15 +12,8 @@ router.get('/', function (req, res) {
 		})
 		.then((pages)=>{
 			res.render('index', {pages})
+			// res.send(pages)
 		})
-})
-
-router.get('/users', function(req, res) {
-	User.findAll({
-	})
-	.then((users) => {
-		res.render('users', {users})
-	})
 })
 
 
