@@ -3,6 +3,7 @@ var app = express ();
 var morgan = require('morgan');
 var nunjucks = require('nunjucks');
 var routes = require('./routes/');
+var wikiRoutes = require('./routes/wiki.js');
 var bodyParser = require('body-parser');
 var db = require('./db/models');
 
@@ -23,6 +24,7 @@ app.use(bodyParser.json())
 
 app.use(morgan('combined'));
 app.use(express.static('public'));
-app.use(routes);
+app.use('/', routes);
+app.use('/wiki', wikiRoutes);
 
 
