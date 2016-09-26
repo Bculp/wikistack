@@ -4,14 +4,18 @@ var morgan = require('morgan');
 var nunjucks = require('nunjucks');
 var routes = require('./routes/');
 var bodyParser = require('body-parser');
+var db = require('./db/models');
 
 nunjucks.configure('views', {noCache : true});
 app.set('view engine', 'html');
 app.engine('html', nunjucks.render);
 
-var server = app.listen(4000,function() {
-	console.log('server is listening');
-})
+db.sync
+	.then(function() {
+		app.listen(4000,function() {
+			console.log("server is listening");
+		})
+	})
 
 
 app.use(bodyParser.urlencoded({extended: false}))
