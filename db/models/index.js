@@ -64,5 +64,5 @@ var User = db.define('user', {
 module.exports = {
   Page: Page,
   User: User,
-  sync: db.sync({force: true})
+  sync: db.sync({force: false})
 };

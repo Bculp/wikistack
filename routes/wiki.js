@@ -17,14 +17,33 @@ router.post('/', (req, res, next)=>{
 	var page = Page.build({
 		title, content
 	})
-	page.save().then(function(savedObj) {
-		res.json(savedObj)
-	});
+	page.save()
+		.then(function(savedObj) {
+			res.redirect(this.urlTitle)
+		})
+		.catch(next);
 })
 
 // retrieve add page form
 router.get('/add', (req, res, next)=>{
 	res.render('addpage');
+})
+
+router.get('/:articleTitle', (req,res,next)=>{
+	var articleTitle = req.params.articleTitle;
+
+	// query database to find actual page
+
+	Page.findOne({
+		where: {
+			urlTitle: articleTitle
+		}
+	}).then((result)=>{
+		// found result
+		// res.send(result);
+		res.render('wikipage', {result});
+	}).catch(next); // catch if no result
+
 })
 
 module.exports = router;

@@ -1,8 +1,19 @@
 var express = require('express');
 var router = express.Router();
 var app = express();
-module.exports = router;
+var models = require('../db/models');
+var Page = models.Page;
+
 
 router.get('/', function (req, res) {
-  res.render('index')
+	Page.findAll({
+			attributes : ["title"]
+		})
+		.then((pages)=>{
+			res.render('index', {pages})
+		})
 })
+
+
+
+module.exports = router;
