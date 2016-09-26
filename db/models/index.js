@@ -42,10 +42,6 @@ var Page = db.define('page', {
             }(page.title)
         }
     }
-        // setterMethods: {
-        //     setUrlTitle: function(newTitle) {
-        //         this.setDataValue('urlTitle',newTitle)}
-        // }
     }
 );
 
@@ -59,10 +55,16 @@ var User = db.define('user', {
         allowNull: false,
         isEmail: true
     }
+},
+    { getterMethods : {
+        userRoute : function() { return "/users/" + this.id }
+    }
 });
+
+Page.belongsTo(User, {as: "author"});
 
 module.exports = {
   Page: Page,
   User: User,
-  sync: db.sync({force: false})
+  sync: db.sync({force: true})
 };

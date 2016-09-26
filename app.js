@@ -6,6 +6,7 @@ var routes = require('./routes/');
 var wikiRoutes = require('./routes/wiki.js');
 var bodyParser = require('body-parser');
 var db = require('./db/models');
+var userRoutes = require('./routes/user.js');
 
 nunjucks.configure('views', {noCache : true});
 app.set('view engine', 'html');
@@ -26,4 +27,5 @@ app.use(morgan('combined'));
 app.use(express.static('public'));
 app.use('/', routes);
 app.use('/wiki', wikiRoutes);
+app.use('/users', userRoutes)
 

@@ -13,16 +13,23 @@ router.get('/', (req, res, next)=>{
 router.post('/', (req, res, next)=>{
 	var title = req.body.title;
 	var content = req.body.content;
+	var name = req.body.name;
+	var email = req.body.email;
 
-	var page = Page.build({
-		title, content
-	})
-	page.save()
-		.then(function(savedObj) {
-			res.redirect(this.urlTitle)
+	User.findOrCreate({where : {name: name, email: email}})
+	.spread(function(user, created) {
+		var page = Page.build({
+			title, content, authorId : user.id
 		})
-		.catch(next);
-})
+		page.save()
+			.then(function(savedObj) {
+				res.redirect(this.urlTitle)
+			})
+			.catch(next);
+		})
+	
+	})
+
 
 // retrieve add page form
 router.get('/add', (req, res, next)=>{
